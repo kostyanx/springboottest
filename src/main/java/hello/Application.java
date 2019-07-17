@@ -1,16 +1,13 @@
 package hello;
 
-import java.util.Arrays;
-import java.util.stream.Stream;
-
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import hello.repositories.ApplicationRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+
+import java.util.Arrays;
 
 @SpringBootApplication
 public class Application {

@@ -23,15 +23,15 @@ public class ContactController {
     @RequestMapping(
             method = RequestMethod.GET,
             path = "/{id}",
-            produces = MediaType.APPLICATION_JSON_VALUE)
+            produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
     public Contact contact(@PathVariable long id) {
-        return contactRepository.findById(id).get();
+        return contactRepository.findById(id).orElseThrow(ContactNotFoundException::new);
     }
 
     @RequestMapping(
             method = RequestMethod.GET,
             path = "/{id}/last_application",
-            produces = MediaType.APPLICATION_JSON_VALUE)
+            produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
     public Application lastApplication(@PathVariable long id) {
         boolean contactExists = contactRepository.existsById(id);
         if (!contactExists) { throw new ContactNotFoundException(); }
