@@ -2,15 +2,20 @@ package hello.controllers;
 
 import hello.entities.Application;
 import hello.entities.Contact;
+import hello.exceptions.ApplicationNotFoundException;
 import hello.exceptions.ContactNotFoundException;
 import hello.repositories.ApplicationRepository;
 import hello.repositories.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.sql.SQLException;
 
 @RestController
 @RequestMapping(path = "/contact")
@@ -35,7 +40,13 @@ public class ContactController {
     public Application lastApplication(@PathVariable long id) {
         boolean contactExists = contactRepository.existsById(id);
         if (!contactExists) { throw new ContactNotFoundException(); }
-        return applicationRepository.findFirstByContactIdOrderByDtCreatedDesc(id);
+        Application result = applicationRepository.findFirstByContactIdOrderByDtCreatedDesc(id);
+        if (result == null) { throw new ApplicationNotFoundException(); }
+        return result;
     }
-    
+
+    @ExceptionHandler(SQLException.class)
+    public ResponseEntity<String> handle(Exception e) {
+        return ResponseEntity.status(500).body("database error");
+    }
 }
