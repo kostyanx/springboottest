@@ -1,14 +1,9 @@
 package hello;
 
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
-
-import java.net.URL;
-
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -16,9 +11,12 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.net.URL;
+
+import static hello.TestUtils.readResource;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Ignore
 public class ContactControllerIT {
 
     @LocalServerPort
@@ -31,13 +29,14 @@ public class ContactControllerIT {
 
     @Before
     public void setUp() throws Exception {
-        this.base = new URL("http://localhost:" + port + "/");
+        this.base = new URL("http://localhost:" + port + "/contact/2/last_application");
     }
 
     @Test
     public void getHello() throws Exception {
         ResponseEntity<String> response = template.getForEntity(base.toString(),
                 String.class);
-        assertThat(response.getBody(), equalTo("Greetings from Spring Boot!"));
+        JSONAssert.assertEquals(response.getBody(), readResource("/required_response.json"), false);
+
     }
 }

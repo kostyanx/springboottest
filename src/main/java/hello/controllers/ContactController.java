@@ -2,6 +2,7 @@ package hello.controllers;
 
 import hello.entities.Application;
 import hello.entities.Contact;
+import hello.exceptions.ContactNotFoundException;
 import hello.repositories.ApplicationRepository;
 import hello.repositories.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,8 @@ public class ContactController {
             path = "/{id}/last_application",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public Application lastApplication(@PathVariable long id) {
+        boolean contactExists = contactRepository.existsById(id);
+        if (!contactExists) { throw new ContactNotFoundException(); }
         return applicationRepository.findFirstByContactIdOrderByDtCreatedDesc(id);
     }
     
