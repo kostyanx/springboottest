@@ -1,5 +1,7 @@
 package hello.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,11 +12,22 @@ public class Contact {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("CONTACT_ID")
     private Long contactId;
 
+    @JsonProperty("FIRST_NAME")
     private String firstName;
 
+    @JsonProperty("LAST_NAME")
     private String lastName;
+
+    public Long getContactId() {
+        return contactId;
+    }
+
+    public void setContactId(Long contactId) {
+        this.contactId = contactId;
+    }
 
     public String getFirstName() {
         return this.firstName;
