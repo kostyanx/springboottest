@@ -1,6 +1,7 @@
 package hello;
 
 import hello.repositories.ApplicationRepository;
+import hello.repository.TaxTradeRepositoryCustom;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,8 +13,6 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import java.util.Arrays;
-
 @SpringBootApplication
 @EnableSwagger2
 public class Application {
@@ -23,12 +22,13 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner commandLineRunner(ApplicationContext ctx, ApplicationRepository applicationRepository) {
+    public CommandLineRunner commandLineRunner(ApplicationContext ctx, ApplicationRepository applicationRepository, TaxTradeRepositoryCustom taxTradeRepositoryCustom) {
         return args -> {
-            System.out.println("Let's inspect the beans provided by Spring Boot:");
-            Arrays.stream(ctx.getBeanDefinitionNames()).sorted().forEach(System.out::println);
-            System.out.println("Applications:");
-            applicationRepository.findAll().forEach(System.out::println);
+            //System.out.println("Let's inspect the beans provided by Spring Boot:");
+            //Arrays.stream(ctx.getBeanDefinitionNames()).sorted().forEach(System.out::println);
+            //System.out.println("Applications:");
+            //applicationRepository.findAll().forEach(System.out::println);
+            System.out.println(taxTradeRepositoryCustom.resetMatchedQtyAfterTradeDateTime());
         };
     }
 

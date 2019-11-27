@@ -24,3 +24,17 @@ insert into APPLICATION (CONTACT_ID, DT_CREATED, PRODUCT_NAME) values (2, '2018-
 insert into APPLICATION (CONTACT_ID, DT_CREATED, PRODUCT_NAME) values (2, '2018-01-03 11:12:14', 'BX Test');
 insert into APPLICATION (CONTACT_ID, DT_CREATED, PRODUCT_NAME) values (2, '2018-01-03 11:12:15', 'BY Test');
 
+
+CREATE TABLE reset_matched_qty_info_response (
+    isin VARCHAR(255),
+    contract_id VARCHAR(255),
+    class_code varchar(255),
+    buy_trade_num VARCHAR(255),
+    buy_trade_date DATE,
+    sell_trade_num VARCHAR(255),
+    sell_trade_date DATE,
+    qty NUMERIC,
+);
+
+insert into reset_matched_qty_info_response(isin, contract_id, class_code, buy_trade_num,    buy_trade_date,  sell_trade_num,      sell_trade_date, qty)
+    values ('2000256095', 'US22788C1053', '7', 'SC191014000000000031', '2019-10-14', 'SC191011000000000097', '2019-10-11', 85 );
